@@ -17,11 +17,23 @@
 <script>
     const map = new maplibregl.Map({
         container: 'map',
+        projection: 'globe',
         zoom: 9,
         center: [137.9150899566626, 36.25956997955441],
         style:
             'https://api.maptiler.com/maps/hybrid/style.json?key=x4PkWnbJomR3gQAHHEce',
         showTileBoundaries: true
+    });
+    map.on('style.load', () => {
+        map.addSource('terrainSource', {
+            type: 'raster-dem',
+            url: 'https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?key=x4PkWnbJomR3gQAHHEce',
+            tileSize: 256
+        });
+        map.setTerrain({
+            source: 'terrainSource',
+            exaggeration: 1
+        });
     });
 </script>
 </body>
